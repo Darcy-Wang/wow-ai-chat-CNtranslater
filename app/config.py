@@ -135,7 +135,8 @@ class WindowsCredentialStore:
             "Type": win32cred.CRED_TYPE_GENERIC,
             "TargetName": target,
             "UserName": "api-key",
-            "CredentialBlob": secret.encode("utf-16-le"),
+            # pywin32 takes Unicode here; CredRead returns UTF-16LE bytes.
+            "CredentialBlob": secret,
             "Persist": win32cred.CRED_PERSIST_LOCAL_MACHINE,
         }, 0)
 

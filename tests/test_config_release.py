@@ -80,8 +80,13 @@ def test_contaminated_example_is_rejected(tmp_path):
 def test_windows_credential_blob_roundtrip(monkeypatch):
     import sys
     saved = {}
+    def write(value, flags):
+        # Match the native binding's asymmetric input/output contract.
+        assert isinstance(value["CredentialBlob"], str)
+        saved.update(value)
+        saved["CredentialBlob"] = value["CredentialBlob"].encode("utf-16-le")
     fake = SimpleNamespace(CRED_TYPE_GENERIC=1, CRED_PERSIST_LOCAL_MACHINE=2,
-                           CredWrite=lambda value, flags: saved.update(value),
+                           CredWrite=write,
                            CredRead=lambda target, kind: saved)
     monkeypatch.setitem(sys.modules, "win32cred", fake)
     monkeypatch.setattr(module, "sys", SimpleNamespace(platform="win32"))
@@ -97,8 +102,9 @@ def test_native_windows_credential_roundtrip():
     target = "WoWChatTranslator/test/" + uuid.uuid4().hex
     store = WindowsCredentialStore()
     try:
-        store.set(target, "isolated-test-secret")
-        assert store.get(target) == "isolated-test-secret"
+        for secret in ("isolated-test-secret", "中文-isolated-test-secret"):
+            store.set(target, secret)
+            assert store.get(target) == secret
     finally:
         store.set(target, "")
     assert store.get(target) == ""
