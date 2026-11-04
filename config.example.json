@@ -1,0 +1,48 @@
+{
+  "api_key": "",
+  "base_url": "https://api.openai.com/v1",
+  "model": "gpt-4o-mini",
+  "wow_log_path": "",
+  "target_language": "中文",
+  "skip_chinese": true,
+  "enable_local_dict": true,
+  "protected_names": "",
+  "channels": {
+    "Party": true,
+    "Raid": true,
+    "Whisper": true,
+    "Yell": true,
+    "Say": true,
+    "Guild": true,
+    "General": false,
+    "Trade": false,
+    "World": false,
+    "Other": false,
+    "Instance": true
+  },
+  "work_mode": "ocr",
+  "ocr_interval": 1.0,
+  "ocr_region": {
+    "left": 30,
+    "top": 1050,
+    "width": 580,
+    "height": 330
+  },
+  "overlay": {
+    "visible": true,
+    "x": 200,
+    "y": 200,
+    "width": 520,
+    "height": 340,
+    "opacity": 0.85,
+    "font_size": 13,
+    "click_through": false,
+    "show_original": true,
+    "max_messages": 60
+  },
+  "ocr_unknown_channel": true,
+  "max_pending": 23,
+  "message_max_age": 12.0,
+  "max_records": 500,
+  "console_max_blocks": 1000
+}

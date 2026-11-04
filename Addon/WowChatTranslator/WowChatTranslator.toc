@@ -1,0 +1,10 @@
+## Interface: 110002, 110007, 40400, 11503, 16001, 30403
+## Title: |cff00ccffWoW Chat Translator|r
+## Title-zhCN: |cff00ccff魔兽实时翻译助手|r
+## Notes: Automatically enables chat logging (/chatlog) on login for the real-time AI translation companion app.
+## Notes-zhCN: 登录时自动开启聊天日志 (/chatlog)，配合外部 AI 实时翻译工具使用。
+## Author: WowChatTranslator Team
+## Version: 1.0.0
+## SavedVariables: WCT_Config
+
+WowChatTranslator.lua

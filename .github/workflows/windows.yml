@@ -1,0 +1,36 @@
+name: Windows checks and package
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: requirements-build.txt
+      - name: Install locked dependencies
+        run: python -m pip install -r requirements-build.txt
+      - name: Regression tests
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: python -m pytest -q
+      - name: Build and verify release
+        run: python scripts/build_release.py
+      - name: Packaged startup smoke test
+        shell: pwsh
+        run: |
+          $process = Start-Process -FilePath "dist/WoWChatTranslator/WoWChatTranslator.exe" -ArgumentList "--self-test" -Wait -PassThru
+          if ($process.ExitCode -ne 0) { throw "Packaged startup self-test failed: $($process.ExitCode)" }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: WoWChatTranslator-Windows
+          path: dist/WoWChatTranslator/
+          if-no-files-found: error

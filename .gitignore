@@ -1,0 +1,37 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+
+# Local sensitive configuration (Contains User API Key!)
+config.json
+
+# Temporary / testing files
+*.log
+test_chat.png
+test_sample.*
+
+# Build and packaging output
+build/
+dist/
+*.egg-info/
+
+# IDE / OS specific
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Local verification artifacts
+.pytest_cache/
+.coverage
+htmlcov/
