@@ -2,6 +2,8 @@
 
 [中文](README.md) | **English**
 
+[![Windows checks](https://github.com/Darcy-Wang/wow-ai-chat-CNtranslater/actions/workflows/windows.yml/badge.svg)](https://github.com/Darcy-Wang/wow-ai-chat-CNtranslater/actions/workflows/windows.yml)
+
 An AI-powered Chinese chat translation companion for World of Warcraft. This Windows desktop application captures a selected screen region with local OCR or tails `WoWChatLog.txt`, translates messages through a local glossary, an in-memory cache, and an OpenAI / DeepSeek-compatible API, then displays translations in a transparent, always-on-top overlay.
 
 The application interface and default translations are in Chinese. This document provides English setup and operating instructions.
@@ -13,7 +15,7 @@ Based on [usherzhao/wow-chat-translator](https://github.com/usherzhao/wow-chat-t
 ## Requirements and installation
 
 - Primary target: 64-bit Windows 10/11 and Python 3.11. Runtime versions are pinned in `requirements.txt`.
-- Native click-through, Credential Manager, display scaling, and in-game behavior require Windows acceptance testing. Other operating systems can run some logic and UI tests; complete functionality is not promised.
+- Click-through, display scaling, and in-game behavior on Windows 10/11 desktops still require acceptance testing. Native credential roundtrips and executable build/startup are covered by Windows CI. Other operating systems can run some logic and UI tests; complete functionality is not promised.
 - The application does not read or modify game memory, inject DLLs, or simulate keyboard or mouse input. These implementation boundaries do not guarantee compliance with game operator policies or any particular account outcome.
 
 Run from source in PowerShell:
@@ -88,6 +90,6 @@ Alternatively, run `build.bat`: install pinned dependencies, run regression test
 
 `--self-test` initializes Qt and local OCR models, then exits. It does not read user configuration, capture the screen, or call paid APIs. The Windows GitHub Actions workflow runs regression tests, builds the application, and tests the packaged executable's startup. Check the actual workflow result; having a workflow file does not mean the build passed.
 
-Local verification before publication: **62 tests passed, one Windows-only native credential integration test skipped**, on macOS arm64 with Python 3.11.15. Qt/OCR startup and synthetic-image OCR inference passed. Windows native credentials, real-game interaction, executable packaging, and prolonged operation still require validation. See [the Windows acceptance checklist (Chinese)](docs/WINDOWS_ACCEPTANCE.md).
+Local verification: **63 tests passed, one Windows-only native credential integration test skipped**, on macOS arm64 with Python 3.11.15. Qt/OCR startup and synthetic-image OCR inference passed. [The Windows CI run](https://github.com/Darcy-Wang/wow-ai-chat-CNtranslater/actions/runs/41815776996), on Windows Server 2025 x64, passed regression tests including native credential roundtrips, executable packaging, and packaged Qt/OCR startup checks. Real-game interaction, click-through and display scaling on Windows 10/11 desktops, and prolonged operation still require acceptance testing. See [the Windows acceptance checklist (Chinese)](docs/WINDOWS_ACCEPTANCE.md).
 
 Dependency inputs are `requirements.in` and `requirements-build.in`; lock files are generated with `uv pip compile --universal --python-version 3.11`. Re-run regression tests, OCR startup checks, and Windows build checks after updates.

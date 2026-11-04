@@ -2,6 +2,8 @@
 
 **中文** | [English](README.en.md)
 
+[![Windows checks](https://github.com/Darcy-Wang/wow-ai-chat-CNtranslater/actions/workflows/windows.yml/badge.svg)](https://github.com/Darcy-Wang/wow-ai-chat-CNtranslater/actions/workflows/windows.yml)
+
 魔兽世界聊天 AI 中文翻译助手
 
 Windows 桌面工具：通过屏幕局部 OCR 或 `WoWChatLog.txt` 采集聊天，使用本地术语词典、翻译缓存及 OpenAI / DeepSeek 兼容接口生成译文，再在置顶悬浮窗中显示。
@@ -13,7 +15,7 @@ Windows 桌面工具：通过屏幕局部 OCR 或 `WoWChatLog.txt` 采集聊天�
 ## 运行环境与安装
 
 - 主要支持目标：Windows 10/11、64 位、Python 3.11。完整依赖版本记录在 `requirements.txt`。
-- Windows 鼠标穿透、Credential Manager、显示器缩放和游戏内效果需要 Windows 实机验收。其他系统可运行部分逻辑和界面测试，不承诺完整功能。
+- Windows 10/11 桌面的鼠标穿透、显示器缩放和游戏内效果仍需实机验收。原生凭据读写及 EXE 打包启动已有 Windows CI 检查。其他系统可运行部分逻辑和界面测试，不承诺完整功能。
 - 程序不读取或修改游戏内存，不注入 DLL，不模拟键鼠。此技术边界不构成对游戏运营方规则或账号结果的保证。
 
 源码运行：
@@ -88,6 +90,10 @@ python scripts/build_release.py
 
 `--self-test` 只初始化 Qt 和本地 OCR 模型后退出，不读用户配置、不截图、不访问付费接口。GitHub Actions 中的 Windows 工作流执行回归、构建和打包程序启动检查；推送后需确认工作流实际通过，不能把配置了工作流等同于已经通过。
 
-测试覆盖倒计时区分、相邻帧去重、重复呼叫、中英混合、副本频道、缓存隔离、队列容量/时效/顺序、停止重启、日志拆分写入与轮换、配置失败、密钥存储边界、发布配置及界面历史容量。Windows 实机验收清单见 `docs/WINDOWS_ACCEPTANCE.md`。
+测试覆盖倒计时区分、相邻帧去重、重复呼叫、中英混合、副本频道、缓存隔离、队列容量/时效/顺序、停止重启、日志拆分写入与轮换、配置失败、密钥存储边界、发布配置及界面历史容量。
+
+验证记录：本地 macOS arm64 / Python 3.11.15 为 **63 项通过、1 项 Windows 专属测试跳过**；GitHub 托管的 Windows Server 2025 x64 环境已通过自动回归（含原生凭据读写）、EXE 构建和打包后 Qt/OCR 启动检查，详见[此次运行](https://github.com/Darcy-Wang/wow-ai-chat-CNtranslater/actions/runs/41815776996)。这些自动检查不替代实际游戏环境验收。
+
+Windows 实机验收清单见 `docs/WINDOWS_ACCEPTANCE.md`。
 
 依赖输入在 `requirements.in`、构建输入在 `requirements-build.in`，锁定文件由 `uv pip compile --universal --python-version 3.11` 生成。升级后须重新运行回归、OCR 自检及 Windows 构建检查。
