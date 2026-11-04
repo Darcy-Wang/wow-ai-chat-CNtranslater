@@ -152,3 +152,22 @@ def test_empty_adjacent_release_config_does_not_require_write_access(tmp_path, c
         original(path, configuration)
     monkeypatch.setattr(module, "atomic_json", writable_user_path_only)
     assert manager.save()
+
+
+def test_release_cli_supports_non_utf8_windows_console(tmp_path, monkeypatch):
+    import io
+    from contextlib import redirect_stdout
+    import scripts.build_release as build
+    (tmp_path / "config.example.json").write_text('{"api_key":""}')
+    monkeypatch.setattr(build, "ROOT", tmp_path)
+    monkeypatch.setattr(build, "sys", SimpleNamespace(platform="win32", executable="python"))
+    commands = []
+    monkeypatch.setattr(build.subprocess, "run", lambda command, **kwargs: commands.append(command))
+    buffer = io.BytesIO()
+    with io.TextIOWrapper(buffer, encoding="cp1252") as stream:
+        with redirect_stdout(stream):
+            build.main()
+        stream.flush()
+        assert b"checks passed" in buffer.getvalue()
+    assert commands
+    assert json.loads((tmp_path / "dist" / "WoWChatTranslator" / "config.json").read_text())["api_key"] == ""

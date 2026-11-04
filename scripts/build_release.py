@@ -38,7 +38,7 @@ def main():
     subprocess.run([sys.executable, "-m", "PyInstaller", "--noconfirm", "--clean",
                     "wow_chat_translator.spec"], cwd=ROOT, check=True)
     prepare_release(ROOT / "dist" / "WoWChatTranslator")
-    print("已完成构建和发布配置检查：dist/WoWChatTranslator")
+    print("Build and release configuration checks passed: dist/WoWChatTranslator")
 
 
 if __name__ == "__main__":
