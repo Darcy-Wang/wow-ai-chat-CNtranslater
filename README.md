@@ -3,11 +3,11 @@
 
 **Windows 桌面助手与游戏插件配合，在游戏聊天中提供英文注释、云翻译和中文转英文。支持本地词库、频道设置、任务参考和私聊白名单。采用插槽回传方案，不修改游戏本地文件且不进行注入，杜绝封号风险！**
 
-**适用 Windows 10/11 64 位与 WoW Forever。**本项目仍处于试用阶段，游戏内效果和不同电脑环境请结合[发布包验收记录](https://github.com/Darcy-Wang/wow-ai-chat-CNtranslater/releases/download/v0.1.0-beta.21/ACCEPTANCE.md)确认。
+**适用 Windows 10/11 64 位与 WoW Forever。**本项目仍处于试用阶段，游戏内效果和不同电脑环境请结合[发布包验收记录](https://github.com/Darcy-Wang/wow-ai-chat-CNtranslater/releases/download/v1.1.0/ACCEPTANCE.md)确认。
 
 ## 下载安装
 
-1. 打开 [Releases 发布页面](https://github.com/Darcy-Wang/wow-ai-chat-CNtranslater/releases)，展开版本下的 **Assets**。当前公开试用版为 [0.1.0-beta.21](https://github.com/Darcy-Wang/wow-ai-chat-CNtranslater/releases/tag/v0.1.0-beta.21)；如有更新，请查看新版说明。
+1. 打开 [Releases 发布页面](https://github.com/Darcy-Wang/wow-ai-chat-CNtranslater/releases)，展开版本下的 **Assets**。当前公开版本为 [1.1.0](https://github.com/Darcy-Wang/wow-ai-chat-CNtranslater/releases/tag/v1.1.0)；如有更新，请查看新版说明。
 2. 首次安装下载 `WCT-Setup-版本-win-x64.exe`，运行安装程序并打开“魔兽实时翻译助手”。不需要下载 Source code，也不需要安装 Python。
 3. 安装器目前没有 Windows Authenticode 商业代码签名证书。请核对下载来源；发布页提供 `SHA256SUMS.json`。`wct-release-版本-win-x64.zip` 是供客户端验证签名后导入的升级包，不要手动解压覆盖安装目录。
 
@@ -19,7 +19,7 @@
 4. 用原来的启动器完整启动游戏并登录。在向导点击“开始验收”，切回游戏输入 `/ct test`，保持游戏前台，等待云译文及回传确认。首页显示的 Key 保存、API 测试和游戏链路验收是不同状态；API 测试成功不代表游戏链路已通过。
 5. 输入 `/ct config` 或点击小地图旁卷轴打开游戏内设置，选择频道和模型。完成安装或配套插件更新后须完整重启游戏。
 
-详细步骤见[发布版使用指南](https://github.com/Darcy-Wang/wow-ai-chat-CNtranslater/releases/download/v0.1.0-beta.21/USER-GUIDE.md)。
+详细步骤见[发布版使用指南](https://github.com/Darcy-Wang/wow-ai-chat-CNtranslater/releases/download/v1.1.0/USER-GUIDE.md)。
 
 ## 日常使用
 
