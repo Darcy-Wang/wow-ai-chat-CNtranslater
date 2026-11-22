@@ -1,99 +1,43 @@
-# wow-ai-chat-CNtranslater
+# 魔兽实时翻译助手 · WoW Forever
 
-**中文** | [English](README.en.md)
+Windows 桌面助手与游戏插件配合，在游戏聊天中提供英文注释、云翻译和中文转英文。支持本地词库、频道设置、任务参考和私聊白名单。
 
-[![Windows checks](https://github.com/Darcy-Wang/wow-ai-chat-CNtranslater/actions/workflows/windows.yml/badge.svg)](https://github.com/Darcy-Wang/wow-ai-chat-CNtranslater/actions/workflows/windows.yml)
+**适用 Windows 10/11 64 位与 WoW Forever。** 安装版无需 Python。本项目仍处于试用阶段，游戏内效果和不同电脑环境请结合[发布包验收记录](https://github.com/Darcy-Wang/wow-ai-chat-CNtranslater/releases/download/v0.1.0-beta.21/ACCEPTANCE.md)确认。
 
-魔兽世界聊天 AI 中文翻译助手
+## 下载安装
 
-Windows 桌面工具：通过屏幕局部 OCR 或 `WoWChatLog.txt` 采集聊天，使用本地术语词典、翻译缓存及 OpenAI / DeepSeek 兼容接口生成译文，再在置顶悬浮窗中显示。
-
-## 项目来源
-
-本项目基于 [usherzhao/wow-chat-translator](https://github.com/usherzhao/wow-chat-translator) 的提交 [`d1bb333`](https://github.com/usherzhao/wow-chat-translator/commit/d1bb3332c33cb85f362106cbdb27def226d495b2) 改进，保留原作者贡献。主要修改包括消息去重和缓存准确性、频道过滤、有界任务队列、密钥保存及 Windows 发布验证。暂未添加许可证。
-
-## 运行环境与安装
-
-- 主要支持目标：Windows 10/11、64 位、Python 3.11。完整依赖版本记录在 `requirements.txt`。
-- Windows 10/11 桌面的鼠标穿透、显示器缩放和游戏内效果仍需实机验收。原生凭据读写及 EXE 打包启动已有 Windows CI 检查。其他系统可运行部分逻辑和界面测试，不承诺完整功能。
-- 程序不读取或修改游戏内存，不注入 DLL，不模拟键鼠。此技术边界不构成对游戏运营方规则或账号结果的保证。
-
-源码运行：
-
-```powershell
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install -r requirements.txt
-python run.py
-```
-
-已安装依赖后，可双击 `start.bat` 启动。
+1. 打开 [Releases 发布页面](https://github.com/Darcy-Wang/wow-ai-chat-CNtranslater/releases)，展开版本下的 **Assets**。当前公开试用版为 [0.1.0-beta.21](https://github.com/Darcy-Wang/wow-ai-chat-CNtranslater/releases/tag/v0.1.0-beta.21)；如有更新，请查看新版说明。
+2. 首次安装下载 `WCT-Setup-版本-win-x64.exe`，运行安装程序并打开“魔兽实时翻译助手”。不需要下载 Source code，也不需要安装 Python。
+3. 安装器目前没有 Windows Authenticode 商业代码签名证书。请核对下载来源；发布页提供 `SHA256SUMS.json`。`wct-release-版本-win-x64.zip` 是供客户端验证签名后导入的升级包，不要手动解压覆盖安装目录。
 
 ## 首次使用
 
-1. 在“屏幕 OCR 设置”中框选聊天区域，保存后关闭框选器。用“测试 OCR”检查实际文字；分辨率预设只是起点。
-2. 将翻译悬浮窗移到捕获区域之外。程序会暂停重叠区域的持续捕获，防止把自身译文再次送入翻译。
-3. 在“AI 接口配置”中选择服务，填写自己的 API Key、地址及模型。测试连通性后保存。测试会产生一次模型调用。
-4. 点击“模拟触发测试聊天”预览译文，再启动持续捕获。
-5. 在“频道与过滤”中选择需要的频道。小队、团队、副本、密语、说话、大喊及公会默认开启，公共频道默认关闭。OCR 识别不出频道时，由单独的“未知频道”选项控制。
-6. 锁定悬浮窗后可在主面板解锁。请先验证鼠标穿透，再进入需要频繁操作的场景。
+1. 在客户端打开“首次使用向导”，阅读并确认云翻译数据范围。选择或自动查找含 `Wow.exe` 的 `_forever_` 目录。检测到的游戏版本仅供参考，不会因版本号或版本信息缺失阻止安装和运行。
+2. **完整退出游戏**，点击“预览并安装插件”，核对清单后安装。主插件与 1,024 个按需加载的回传收件箱须配套安装；安装前会备份已有文件，不修改其他插件或 WTF。
+3. 在向导中申请并保存自己的硅基流动 API Key，选择模型测试。服务费用、免费额度和代金券规则以服务商为准；测试也会调用接口。Key 可暂时跳过，此时只能使用本地注释，云翻译尚未就绪。
+4. 用原来的启动器完整启动游戏并登录。在向导点击“开始验收”，切回游戏输入 `/ct test`，保持游戏前台，等待云译文及回传确认。首页显示的 Key 保存、API 测试和游戏链路验收是不同状态；API 测试成功不代表游戏链路已通过。
+5. 输入 `/ct config` 或点击小地图旁卷轴打开游戏内设置，选择频道和模型。完成安装或配套插件更新后须完整重启游戏。
 
-OCR 默认检测间隔为 1 秒，可调为 0.5～5 秒。画面没有明显变化时跳过 OCR，但仍有截图和差分计算开销。实际延迟包含采集、OCR、排队、网络和模型响应，不保证固定耗时。界面的端到端指标从截图开始（日志模式为完整行被读取）计算至译文展示，不包含聊天出现至下一次截图的等待，也不包含游戏日志尚未落盘的时间。
+详细步骤见[发布版使用指南](https://github.com/Darcy-Wang/wow-ai-chat-CNtranslater/releases/download/v0.1.0-beta.21/USER-GUIDE.md)。
 
-## 消息准确性与时效
+## 日常使用
 
-- OCR 仅在相邻识别帧间对完整文字逐条匹配，支持滚动重叠和重复行；不再跨历史模糊删除相似指令。
-- `pull in 5`、`pull in 15`、`pull in 1.5` 分别处理；缓存保留数字、标点、词边界和大小写。
-- 日志中同一玩家再次发送相同内容仍作为新消息显示，译文可以从缓存复用。
-- 纯中文消息可跳过，中英混合消息保留翻译资格。玩家名可自动登记或手动保护。
-- 默认最多保留 23 个待交付翻译任务，包括最多 3 个执行中的请求；满载时丢弃新消息，并显示计数。
-- 默认消息时效 12 秒。过时任务不再展示译文，表格显示原因；未开始执行的过时任务不会调用接口。
-- 结果按采集顺序展示。停止、切换模式或修改翻译设置会废弃旧翻译结果；已经发送的请求无法撤回，仍可能计费。
-- API 请求关闭自动重试。认证失败会暂停远程翻译直到重新保存 API 设置，限流冷却 5 秒，超时冷却 2 秒，本地词典和已有缓存仍可用。这些错误会给出简短状态，不把服务端原始错误或密钥写入诊断日志。
-- 悬浮窗默认保留 60 条消息，主表格 500 条，控制台 1000 个文本块；缓存最多 3000 条。
+- 保持桌面助手运行；关闭窗口后可在系统托盘打开、暂停或退出。游戏切到后台时等待前台信号，切回后继续。开机启动可在设置中调整。
+- `/ct help` 查看命令；`/ct config` 打开设置；`/ct on` 和 `/ct off` 控制连续翻译。
+- `/ct p 中文` 发往队伍，`/ct g 中文` 发往公会，`/ct s 中文` 用于说话；`/ct 中文` 使用上次确认的频道。野外说话及公共频道回填英文后，需自己再按 Enter。失败时可用 `/ct draft` 取回草稿，`/ct cancel` 取消。
+- 私聊输入框中输入 `/ct ex` 可将当前对象加入连续翻译白名单；游戏设置中也可管理名单。
 
-OCR 仍有固有限制：无法可靠区分两次采样之间被替换为完全相同文字、且行数与画面位置没有变化的发言；低置信度、换行、背景变化也可能造成遗漏或重复。暂未实现跨行语义拼接或完整聊天事件重建。游戏窗口移动后需要重新框选；跨显示器的捕获区域会被拒绝，显示器对应关系不明确时提示重新选择，不猜测坐标。
+## 更新与排查
 
-## 配置、密钥和隐私
+在客户端“更新”页检查更新，或导入发布页的签名 ZIP。自动检查与升级可在客户端设置；涉及插件的更新需完整退出游戏。beta.19 及更早版本请先导入 beta.21 签名 ZIP 迁移更新源。原版本与插件备份可用于回退；中断时先退出游戏，再在“设置与诊断”中恢复。
 
-- Windows 配置路径：`%APPDATA%\WoWChatTranslator\config.json`。API Key 单独存放在当前用户的 Windows Credential Manager，JSON 中的 `api_key` 保持为空，`credential_id` 是凭据引用。正常启动只允许一个实例使用该用户配置。
-- 首次迁移时可读取旧程序目录的 `config.json`。保存成功后，密钥进入凭据管理器，旧文件中的明文密钥被清空，其他旧配置保留。
-- 若旧文件只读导致清理失败，会提示保存未全部完成；处理权限后重新保存。请自行检查以前分享过的压缩包，必要时更换旧密钥。
-- 使用临时文件和原子替换保存。读取失败或配置损坏时阻止覆盖原文件，提示用户修复后重启；不会静默重置损坏配置。
-- 诊断日志不输出聊天正文、角色名、密钥片段或原始接口错误。原文和译文仍显示在本机界面；实际发送给接口服务商的内容由该服务商处理。使用第三方代理前确认其可信度。
-- 配置文件保留游戏路径和手动设置的玩家名，分享配置前应清理。发布流程只使用空白公开示例，绝不复制本机配置。
+没有译文时，先确认角色已登录、游戏在前台、云翻译已开启，再检查 Key、余额和 API 测试，并重新执行游戏内验收。插件缺失可在退出游戏后使用“插件管理”检查或修复。回传槽位耗尽时可在方便时 `/reload`。诊断包导出前可预览，不包含聊天、任务、Key、截图或原始日志。
 
-高级容量设置可在关闭程序后修改配置中的 `max_pending`、`message_max_age`、`max_records`、`console_max_blocks` 及 `overlay.max_messages`。
+## 隐私与项目源码
 
-## 日志模式与 Lua 插件
+API Key 保存在当前 Windows 用户的凭据管理器。启用云翻译后，待翻译文本及开启的术语、任务参考直接发送给所选 API 服务；本软件不提供中转服务器，也不自动上传诊断。客户端不读取游戏进程内存或模拟输入。卸载客户端默认保留插件和个人配置，可在设置中分别清理。
 
-日志模式需选择对应客户端的 `Logs/WoWChatLog.txt`。现有历史记录默认跳过，只处理启动监听后追加的完整行；支持文件截断、轮换及拆分写入的 UTF-8 文本。游戏客户端可能延迟写盘，实际行为取决于客户端版本，日志模式不保证即时翻译。
+当前 GitHub 主分支保留早期 OCR / 日志悬浮窗项目源码，与上面 Forever 安装包的实现和操作流程不同；不要将主分支的 `run.py`、`start.bat` 或旧版英文说明当作 Forever 安装步骤。Forever 桌面客户端、插件及后续改动目前在本地工作区开发，公开版本以 Releases 附件及其说明为准。
 
-可将 `Addon/WowChatTranslator` 安装到客户端的 `Interface/AddOns/`，再在游戏内重新加载界面。插件用于登录时开启 `/chatlog`，不能强制游戏即时刷新日志缓冲。不同客户端的插件 Interface 版本需要实际确认，未在游戏中验证的版本不宣称兼容。
+项目基于 [usherzhao/wow-chat-translator](https://github.com/usherzhao/wow-chat-translator) 的早期工作，保留原作者贡献。仓库暂未添加许可证。
 
-- `/wct status`：查看日志状态。
-- `/wct on`、`/wct off`：控制日志及登录自动开启设置。
-- `/wct test`：在本地聊天框打印英文文本，供 OCR 预览使用；它不是发送给其他玩家的真实聊天事件，不保证进入聊天日志。
-
-## 测试与 Windows 发布
-
-```powershell
-python -m pip install -r requirements-build.txt
-$env:QT_QPA_PLATFORM="offscreen"
-python -m pytest -q
-python run.py --self-test
-Remove-Item Env:QT_QPA_PLATFORM
-python scripts/build_release.py
-```
-
-也可直接执行 `build.bat`：安装锁定依赖 → 运行回归测试 → 构建 → 检查发布配置。产物位于 `dist/WoWChatTranslator/`，分享整个目录，不要只复制 EXE。每次构建都会用空白示例覆盖旧发布配置。
-
-`--self-test` 只初始化 Qt 和本地 OCR 模型后退出，不读用户配置、不截图、不访问付费接口。GitHub Actions 中的 Windows 工作流执行回归、构建和打包程序启动检查；推送后需确认工作流实际通过，不能把配置了工作流等同于已经通过。
-
-测试覆盖倒计时区分、相邻帧去重、重复呼叫、中英混合、副本频道、缓存隔离、队列容量/时效/顺序、停止重启、日志拆分写入与轮换、配置失败、密钥存储边界、发布配置及界面历史容量。
-
-验证记录：本地 macOS arm64 / Python 3.11.15 为 **63 项通过、1 项 Windows 专属测试跳过**；GitHub 托管的 Windows Server 2025 x64 环境已通过自动回归（含原生凭据读写）、EXE 构建和打包后 Qt/OCR 启动检查，详见[此次运行](https://github.com/Darcy-Wang/wow-ai-chat-CNtranslater/actions/runs/41815776996)。这些自动检查不替代实际游戏环境验收。
-
-Windows 实机验收清单见 `docs/WINDOWS_ACCEPTANCE.md`。
-
-依赖输入在 `requirements.in`、构建输入在 `requirements-build.in`，锁定文件由 `uv pip compile --universal --python-version 3.11` 生成。升级后须重新运行回归、OCR 自检及 Windows 构建检查。
