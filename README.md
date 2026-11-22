@@ -3,7 +3,7 @@
 
 Windows 桌面助手与游戏插件配合，在游戏聊天中提供英文注释、云翻译和中文转英文。支持本地词库、频道设置、任务参考和私聊白名单。
 
-**适用 Windows 10/11 64 位与 WoW Forever。** 安装版无需 Python。本项目仍处于试用阶段，游戏内效果和不同电脑环境请结合[发布包验收记录](https://github.com/Darcy-Wang/wow-ai-chat-CNtranslater/releases/download/v0.1.0-beta.21/ACCEPTANCE.md)确认。
+**适用 Windows 10/11 64 位与 WoW Forever。**本项目仍处于试用阶段，游戏内效果和不同电脑环境请结合[发布包验收记录](https://github.com/Darcy-Wang/wow-ai-chat-CNtranslater/releases/download/v0.1.0-beta.21/ACCEPTANCE.md)确认。
 
 ## 下载安装
 
