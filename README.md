@@ -1,4 +1,4 @@
-# 魔兽实时翻译助手 · WoW Forever CN Translater
+# 魔兽实时翻译助手 · WoW Forever AI CN Translater
 
 
 Windows 桌面助手与游戏插件配合，在游戏聊天中提供英文注释、云翻译和中文转英文。支持本地词库、频道设置、任务参考和私聊白名单。
