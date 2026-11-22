@@ -1,3 +1,5 @@
+> **Legacy documentation:** The instructions below describe the older OCR/log application on this branch. For the current WoW Forever installer and first-time setup, see the [Chinese README](README.md) and [Releases](https://github.com/Darcy-Wang/wow-ai-chat-CNtranslater/releases).
+
 # wow-ai-chat-CNtranslater
 
 [中文](README.md) | **English**
